@@ -1,5 +1,5 @@
 import argparse
-import random
+import secrets
 import time
 import sys
 from string import ascii_letters
@@ -20,38 +20,27 @@ LOW_BUCKET_BOUNDRY = 45 # Used to weight the probibility of generating a letter
 MID_BUCKET_BOUNDRY = 66 # Used to weight the probibility of generating a number
 
 
-def random_char_generator(char_type, special_char_list):
+def secrets_char_generator(char_type, special_char_list):
     """
-    Returns a random char of a random type
+    Returns a secrets char of a secrets type
     """
     if char_type == UPPER_CASE:
-        rand_char = random.choice(ascii_letters).upper()
+        rand_char = secrets.choice(ascii_letters).upper()
     if char_type == LOWER_CASE:
-        rand_char = random.choice(ascii_letters).lower()
+        rand_char = secrets.choice(ascii_letters).lower()
     if char_type == NUMBER:
-        rand_char = random.randint(0,9)
+        rand_char = secrets.randbelow(10)
     if char_type == SPECIAL_CHAR:
-        rand_char = random.choice(special_char_list)
+        rand_char = secrets.choice(special_char_list)
 
     return rand_char
 
 
-def random_key(my_dict):
+def secrets_key(my_dict):
     """
-    Returns a random key from a dictionary
+    Returns a secrets key from a dictionary
     """
-    return random.choice(list(my_dict))
-
-
-def seed_generator():
-    """
-    Craetes a random seed based on the current time
-    """
-    # For very short periods of time, the initial seeds for feeding the pseudo-random generator will be hugely different between two successive calls.
-    t = int(time.time() * 1000.0)
-    seed = ((t & 0xff000000) >> 24) + ((t & 0x00ff0000) >>  8) + ((t & 0x0000ff00) <<  8) + ((t & 0x000000ff) << 24)
-
-    return seed
+    return secrets.choice(list(my_dict))
 
 
 def generate_password(
@@ -64,7 +53,7 @@ def generate_password(
     no_numbers = False
     ):
     """ 
-    Generates a random password with the given parameters
+    Generates a secrets password with the given parameters
     """
     # Create a list of alphabet characters
     alphabet = []
@@ -84,7 +73,7 @@ def generate_password(
         for char in _MATH_CHARS:
             usable_special_chars.append(char)
 
-    # passwords generally require one upper case, one lower case, one number, and one special character, so we want to randomly assign each of those to a
+    # passwords generally require one upper case, one lower case, one number, and one special character, so we want to secretsly assign each of those to a
     # position in our password so it will satifify our requirement
     # First we need to find out what special characters we need
 
@@ -106,56 +95,54 @@ def generate_password(
     for i in range(0, length):
         position_dict[i] = None
 
-    # Next we randomly assign each of our required_char_type to a position in the dictionary
+    # Next we secretsly assign each of our required_char_type to a position in the dictionary
     possible_manditory_positions = []
     for i in range(0, length):
         possible_manditory_positions.append(i)
 
     while len(required_char_type) != 0:
-        random_required_char = random.choice(required_char_type)
-        required_char_type.remove(random_required_char)
+        secrets_required_char = secrets.choice(required_char_type)
+        required_char_type.remove(secrets_required_char)
 
-        rand_char = random_char_generator(random_required_char, usable_special_chars)
+        rand_char = secrets_char_generator(secrets_required_char, usable_special_chars)
 
-        key = random.choice(possible_manditory_positions)
+        key = secrets.choice(possible_manditory_positions)
         possible_manditory_positions.remove(key)
         
         position_dict[key] = rand_char
-        
-        random.seed(seed_generator())
 
     # Now we fill out the rest of the position dictionary
     while len(possible_manditory_positions) != 0:
-        key = random.choice(possible_manditory_positions)
+        key = secrets.choice(possible_manditory_positions)
         possible_manditory_positions.remove(key)
 
-        random_number = random.randint(0, 100)
+        secrets_number = secrets.randbelow(101)
 
-        if random_number < LOW_BUCKET_BOUNDRY:
-            assigned_char = random.choice(alphabet)
+        if secrets_number < LOW_BUCKET_BOUNDRY:
+            assigned_char = secrets.choice(alphabet)
                 
-        elif LOW_BUCKET_BOUNDRY <= random_number and random_number < MID_BUCKET_BOUNDRY:
+        elif LOW_BUCKET_BOUNDRY <= secrets_number and secrets_number < MID_BUCKET_BOUNDRY:
             if no_numbers == False:
-                assigned_char = random.randint(0,9)
+                assigned_char = secrets.randbelow(10)
             else:
                 if len(usable_special_chars) != 0:
-                    if random.choice([0, 1]) == 1:
-                        assigned_char = random.choice(usable_special_chars)
+                    if secrets.choice([0, 1]) == 1:
+                        assigned_char = secrets.choice(usable_special_chars)
                     else:
-                        assigned_char = random.choice(alphabet)
+                        assigned_char = secrets.choice(alphabet)
                 else:
-                    assigned_char = random.choice(alphabet)
+                    assigned_char = secrets.choice(alphabet)
         else:
             if len(usable_special_chars) != 0:
-                assigned_char = random.choice(usable_special_chars)
+                assigned_char = secrets.choice(usable_special_chars)
             else:
                 if no_numbers == False:
-                    if random.choice([0, 1]) == 1:
-                        assigned_char = random.randint(0,9)
+                    if secrets.choice([0, 1]) == 1:
+                        assigned_char = secrets.randbelow(10)
                     else:
-                        assigned_char = random.choice(alphabet)
+                        assigned_char = secrets.choice(alphabet)
                 else:
-                    assigned_char = random.choice(alphabet)
+                    assigned_char = secrets.choice(alphabet)
             
         position_dict[key] = assigned_char
 
@@ -165,11 +152,15 @@ def generate_password(
             if no_lowercase == True:
                 position_dict[i] = position_dict[i].upper()
             if no_uppercase == False and no_lowercase == False:
-                if random.choice([0, 1]) == 1:
+                if secrets.choice([0, 1]) == 1:
                     position_dict[i] = position_dict[i].upper()
         generated_string = generated_string + str(position_dict[i])
 
-    return generated_string
+    # Give the password one final shuffle
+    generated_string_list = list(generated_string)
+    secrets.SystemRandom().shuffle(generated_string_list)
+    
+    return ''.join(generated_string_list)
 
 
 def main():
@@ -192,10 +183,6 @@ def main():
     if args.no_uppercase == True and args.no_lowercase == True:
         print("You can't use both the --no_uppercase and --no_lowercase options together - they are mutually exclusive")
         return -1
-
-    # Seed the randomizer
-    
-    random.seed(seed_generator())
 
     return generate_password(
         length = args.length,
