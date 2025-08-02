@@ -169,9 +169,7 @@ def generate_password(
                     position_dict[i] = position_dict[i].upper()
         generated_string = generated_string + str(position_dict[i])
 
-    print(generated_string)
-
-    return 0
+    return generated_string
 
 
 def main():
