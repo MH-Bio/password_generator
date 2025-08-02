@@ -121,6 +121,8 @@ def generate_password(
         possible_manditory_positions.remove(key)
         
         position_dict[key] = rand_char
+        
+        random.seed(seed_generator())
 
     # Now we fill out the rest of the position dictionary
     while len(possible_manditory_positions) != 0:
@@ -154,7 +156,6 @@ def generate_password(
                         assigned_char = random.choice(alphabet)
                 else:
                     assigned_char = random.choice(alphabet)
-
             
         position_dict[key] = assigned_char
 
