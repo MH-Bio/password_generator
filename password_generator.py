@@ -28,25 +28,6 @@ LOWER_CASE = 'Lower Case'
 NUMBER = 'Number'
 SPECIAL_CHAR = 'Special Char'
 
-# Weights
-LOW_BUCKET_BOUNDRY = 45 # Used to weight the probibility of generating a letter
-MID_BUCKET_BOUNDRY = 66 # Used to weight the probibility of generating a number
-
-
-def secrets_char_generator(char_type, special_char_list):
-    """
-    Returns a secrets char of a secrets type
-    """
-    if char_type == UPPER_CASE:
-        rand_char = secrets.choice(ascii_letters).upper()
-    if char_type == LOWER_CASE:
-        rand_char = secrets.choice(ascii_letters).lower()
-    if char_type == NUMBER:
-        rand_char = secrets.randbelow(10)
-    if char_type == SPECIAL_CHAR:
-        rand_char = secrets.choice(special_char_list)
-
-    return rand_char
 
 def generate_password(
     length = 12,
