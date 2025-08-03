@@ -36,11 +36,17 @@ def generate_password(
     no_common_special = False,
     no_uncommon_special = False,
     no_math_chars = False,
-    no_numbers = False
+    no_numbers = False,
+    low_bucket_boundry = 45,
+    mid_bucket_boundry = 66
     ):
     """ 
     Generates a secrets password with the given parameters
     """
+    # Bucket weights
+    LOW_BUCKET_BOUNDRY = low_bucket_boundry # Used to weight the probibility of generating a letter
+    MID_BUCKET_BOUNDRY = mid_bucket_boundry # Used to weight the probibility of generating a number
+
     # Create a list of alphabet characters
     alphabet = []
     for i in range(97, 123):
@@ -162,6 +168,8 @@ def main():
     parser.add_argument('--no_uncommon_special', action='store_true', default=False, help="Excludes uncommon special characters in the generated password")
     parser.add_argument('--no_math_chars', action='store_true', default=False, help="Excludes uncommon special characters in the generated password")
     parser.add_argument('--no_numbers', action='store_true', default=False, help="Excludes numbers in the generated password")
+    parser.add_argument('--low_bucket_boundry', type=int, default=45, help="Sets the low bucket boundry for generating alphabet characters for your password")
+    parser.add_argument('--mid_bucket_boundry', type=int, default=66, help="Sets the middle bucket boundry for generating numbers characters for your password")
 
     # Run the parser and places the extracted data in a argparse.Namespace object
     args = parser.parse_args()
