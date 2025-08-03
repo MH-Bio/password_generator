@@ -1,6 +1,6 @@
 # Secure Password Generator
 
-This is a command-line password generator written in Python that creates **secure, customizable passwords** using the `secrets` module. It offers strong cryptographic randomness, configurable character sets, and adjustable probabilities for character types.
+This is a command-line password generator written in Python that creates secure, customizable passwords.  It offers strong cryptographic randomness, configurable character sets, and adjustable probabilities for character types.
 
 ---
 
@@ -16,7 +16,7 @@ This work is licensed under the [Creative Commons Attribution 4.0 International 
 
 ## Features
 
-- **Cryptographically secure**: Uses Python’s `secrets` module, not `random`
+- **Cryptographically secure**: Uses Python’s [`secrets`](https://docs.python.org/3/library/secrets.html) module, not [`random`](https://docs.python.org/3/library/random.html)
 - **Customizable length**: Default is 12 characters; minimum is 4
 - **Character type toggles**:
   - Uppercase or lowercase letters
@@ -33,7 +33,9 @@ Run the script using Python 3:
 
 ```bash
 python secure_password_generator.py [OPTIONS]
+```
 
+---
 
 ## Options
 
@@ -43,7 +45,7 @@ python secure_password_generator.py [OPTIONS]
 | `--no_uppercase`        | Exclude uppercase letters                                 |
 | `--no_lowercase`        | Exclude lowercase letters                                 |
 | `--no_common_special`   | Exclude common special characters (`!@#$%^&*()`)          |
-| `--no_uncommon_special` | Exclude uncommon special characters (`,.';:/<>[]{}`\~|\`) |
+| `--no_uncommon_special` | Exclude uncommon special characters (`,.';:/<>[]{}\~|\`)  |
 | `--no_math_chars`       | Exclude math-related special characters (`=+-`)           |
 | `--no_numbers`          | Exclude digits                                            |
 | `--low_bucket_boundry`  | Weight (0–100) for letter generation (default: 45)        |
@@ -84,14 +86,6 @@ python secure_password_generator.py --low_bucket_boundry 60 --mid_bucket_boundry
 
 ## Requirements
 
-  * Python 3.6 or later (for secrets module)
+  * Python 3.6 or later
 
 ---
-
-## Contact
-
-If you have questions, feedback, or suggestions, feel free to reach out:
-
-Michael C. Hernandez - michaelhern@hotmail.com
-
---- 
