@@ -75,6 +75,7 @@ def generate_password(
         SPECIAL_CHAR: False if len(usable_special_chars) == 0 else True
     }
 
+    # Figure out which types characters are required in our password (upper case, lower case, numbers, special characters)
     required_char_type = []
     for key in required_chars.keys():
         if required_chars[key] == True:
@@ -90,27 +91,52 @@ def generate_password(
     for i in range(0, length):
         possible_manditory_positions.append(i)
 
+    # Pick the type of character you will genrate at random (e.g. upper case), then you remove the type of character
+    # from the list of required characters.  Next randomly generate the character.  Then pick a random position
+    # within your password and shove that character in there.  Repeat until all required types are gone.
     while len(required_char_type) != 0:
         secrets_required_char = secrets.choice(required_char_type)
         required_char_type.remove(secrets_required_char)
 
-        rand_char = secrets_char_generator(secrets_required_char, usable_special_chars)
+        if secrets_required_char == UPPER_CASE:
+            rand_char = secrets.choice(ascii_letters).upper()
+        if secrets_required_char == LOWER_CASE:
+            rand_char = secrets.choice(ascii_letters).lower()
+        if secrets_required_char == NUMBER:
+            rand_char = secrets.randbelow(10)
+        if secrets_required_char == SPECIAL_CHAR:
+            rand_char = secrets.choice(usable_special_chars)
 
         key = secrets.choice(possible_manditory_positions)
         possible_manditory_positions.remove(key)
         
         position_dict[key] = rand_char
 
-    # Now we fill out the rest of the position dictionary
+    # Now we fill out the rest of the position dictionary, but this time we are going to randomly
+    # choose the type of character we are going to pick without getting rid of the possibility of
+    # picking that type again (e.g. you can decide to use numbers 2+ times).
+    # Generate a random number between 0 - 100, depending on which bucket that number falls within
+    # will determine what type of character you generate (letter, number, or special character).
+    #
+    # |-----------LETTER-----------|-----------NUMBER-----------|------SPECIAL CHARACTER------|
+    # 0                    LOW_BUCKET_BOUNDRY            MID_BUCKET_BOUNDRY                  100
+    #
+    # The bucket boundries can be adjusted as an input arguement to make it more or less likely 
+    # to generate a particular type of character.
     while len(possible_manditory_positions) != 0:
-        key = secrets.choice(possible_manditory_positions)
-        possible_manditory_positions.remove(key)
+        key = secrets.choice(possible_manditory_positions) # pick a random position in your dictionary to assign your char to
+        possible_manditory_positions.remove(key) # remove the position from your list of possible positions
 
-        secrets_number = secrets.randbelow(101)
+        # Generate a random number below 101 (i.e. 100 or less)
+        secrets_number = secrets.randbelow(101) 
 
+        # Assign a lower case letter if you fall in this bucket
         if secrets_number < LOW_BUCKET_BOUNDRY:
             assigned_char = secrets.choice(alphabet)
                 
+        # Assign a number if we fall in the middle bucket.  If numbers are not allowed, then 
+        # assign either a lower case letter or a special character.  If special characters
+        # are not allowed, then just assign a letter.
         elif LOW_BUCKET_BOUNDRY <= secrets_number and secrets_number < MID_BUCKET_BOUNDRY:
             if no_numbers == False:
                 assigned_char = secrets.randbelow(10)
@@ -122,6 +148,10 @@ def generate_password(
                         assigned_char = secrets.choice(alphabet)
                 else:
                     assigned_char = secrets.choice(alphabet)
+        
+        # Assign a special character if we fall in the upper bucket.  If special characters
+        # are not allowed then either assign a letter or a number.  If numbers are not allowed
+        # then just assign a letter
         else:
             if len(usable_special_chars) != 0:
                 assigned_char = secrets.choice(usable_special_chars)
@@ -133,9 +163,16 @@ def generate_password(
                         assigned_char = secrets.choice(alphabet)
                 else:
                     assigned_char = secrets.choice(alphabet)
-            
+        
+        # Put the randomly generated character into your dictionary at the position which was
+        # decided at the start of the loop.
         position_dict[key] = assigned_char
 
+    # At this point all characters within your dictionary have been assigned, so next we
+    # need to convert the individual dictionary values into a string.  All of our generated
+    # letters are lower case (except for the one required upper case letter), so if upper
+    # case letters are allowed, you have a 50/50 chance of converting a character to be 
+    # upper case.  If lowercase is not allowed, then just convert all letters to upper case
     generated_string = '' 
     for i in range(0, length):
         if str(position_dict[i]) in alphabet:
@@ -146,7 +183,7 @@ def generate_password(
                     position_dict[i] = position_dict[i].upper()
         generated_string = generated_string + str(position_dict[i])
 
-    # Give the password one final shuffle
+    # Give the password one final shuffle for additional randomness
     generated_string_list = list(generated_string)
     secrets.SystemRandom().shuffle(generated_string_list)
     
@@ -155,7 +192,7 @@ def generate_password(
 
 def main():
     """
-    The main function
+    The main function used to assign input arguements and call the generate_password() function.
     """
     parser = argparse.ArgumentParser()
 
@@ -183,7 +220,9 @@ def main():
         no_common_special = args.no_common_special,
         no_uncommon_special = args.no_uncommon_special,
         no_math_chars = args.no_math_chars,
-        no_numbers = args.no_numbers
+        no_numbers = args.no_numbers,
+        low_bucket_boundry = args.low_bucket_boundry,
+        mid_bucket_boundry = args.mid_bucket_boundry
     )
 
 if __name__ == '__main__':
