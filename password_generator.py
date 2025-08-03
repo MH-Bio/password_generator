@@ -68,7 +68,6 @@ def generate_password(
     # passwords generally require one upper case, one lower case, one number, and one special character, so we want to secretsly assign each of those to a
     # position in our password so it will satifify our requirement
     # First we need to find out what special characters we need
-
     required_chars = {
         UPPER_CASE: False if no_uppercase else True,
         LOWER_CASE: False if no_lowercase else True,
@@ -80,7 +79,6 @@ def generate_password(
     for key in required_chars.keys():
         if required_chars[key] == True:
             required_char_type.append(key)
-
 
     # create a dictionary to store what type of variable you will have each character in
     position_dict = dict()
@@ -187,7 +185,6 @@ def main():
         no_math_chars = args.no_math_chars,
         no_numbers = args.no_numbers
     )
-
 
 if __name__ == '__main__':
     sys.exit(main())  # next section explains the use of sys.exit
