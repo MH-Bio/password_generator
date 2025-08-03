@@ -1,6 +1,5 @@
 import argparse
 import secrets
-import time
 import sys
 from string import ascii_letters
 
