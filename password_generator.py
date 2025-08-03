@@ -1,3 +1,17 @@
+"""
+This work is licensed under the Creative Commons Attribution 4.0 International License.
+To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+
+Date: August 3, 2025
+Author: Michael C. Hernandez
+email: michaelhern@hotmail.com
+
+This program generates a randomized password.  By default it is 12 characters, but it can be
+made longer or shorter (4 chars is minimum).  User can adjust probibilities of generating a 
+letter, number, or special character using input arguements, but the default is a 45% chance 
+of a letter of some sort, a 21% chance of a number, and a 34% chance of generating a special
+character.
+"""
 import argparse
 import secrets
 import sys
