@@ -34,21 +34,20 @@ Run the script using Python 3:
 ```bash
 python secure_password_generator.py [OPTIONS]
 
----
 
 ## Options
 
-| Option                  | Description                                           |     |
-| ----------------------- | ----------------------------------------------------- | --- |
-| `-l`, `--length`        | Length of the password (default: 12, min: 4)          |     |
-| `--no_uppercase`        | Exclude uppercase letters                             |     |
-| `--no_lowercase`        | Exclude lowercase letters                             |     |
-| `--no_common_special`   | Exclude common special characters (`!@#$%^&*()`)      |     |
-| `--no_uncommon_special` | Exclude uncommon special characters (`,.';:/<>[]{}`\~ | \`) |
-| `--no_math_chars`       | Exclude math-related special characters (`=+-`)       |     |
-| `--no_numbers`          | Exclude digits                                        |     |
-| `--low_bucket_boundry`  | Weight (0–100) for letter generation (default: 45)    |     |
-| `--mid_bucket_boundry`  | Weight (0–100) for number generation (default: 66)    |     |
+| Option                  | Description                                               |
+| ----------------------- | --------------------------------------------------------- |
+| `-l`, `--length`        | Length of the password (default: 12, min: 4)              |
+| `--no_uppercase`        | Exclude uppercase letters                                 |
+| `--no_lowercase`        | Exclude lowercase letters                                 |
+| `--no_common_special`   | Exclude common special characters (`!@#$%^&*()`)          |
+| `--no_uncommon_special` | Exclude uncommon special characters (`,.';:/<>[]{}`\~|\`) |
+| `--no_math_chars`       | Exclude math-related special characters (`=+-`)           |
+| `--no_numbers`          | Exclude digits                                            |
+| `--low_bucket_boundry`  | Weight (0–100) for letter generation (default: 45)        |
+| `--mid_bucket_boundry`  | Weight (0–100) for number generation (default: 66)        |
 
 ---
 
