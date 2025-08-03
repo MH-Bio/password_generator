@@ -44,9 +44,9 @@ python secure_password_generator.py [OPTIONS]
 | `-l`, `--length`        | Length of the password (default: 12, min: 4)              |
 | `--no_uppercase`        | Exclude uppercase letters                                 |
 | `--no_lowercase`        | Exclude lowercase letters                                 |
-| `--no_common_special`   | Exclude common special characters (`!@#$%^&*()`)          |
-| `--no_uncommon_special` | Exclude uncommon special characters (`,.';:/<>[]{}\~|\`)  |
-| `--no_math_chars`       | Exclude math-related special characters (`=+-`)           |
+| `--no_common_special`   | Exclude common special characters (!@#$%^&*())          |
+| `--no_uncommon_special` | Exclude uncommon special characters (,.';:/&lt;&gt;[]{}&#92;&#126;&#124;) |
+| `--no_math_chars`       | Exclude math-related special characters (=+-)           |
 | `--no_numbers`          | Exclude digits                                            |
 | `--low_bucket_boundry`  | Weight (0–100) for letter generation (default: 45)        |
 | `--mid_bucket_boundry`  | Weight (0–100) for number generation (default: 66)        |
