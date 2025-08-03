@@ -212,6 +212,10 @@ def main():
     if args.no_uppercase == True and args.no_lowercase == True:
         print("You can't use both the --no_uppercase and --no_lowercase options together - they are mutually exclusive")
         return -1
+    
+    if args.length < 4:
+        print("The minimum required number of characters is 4")
+        return -1
 
     return generate_password(
         length = args.length,
