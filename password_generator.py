@@ -186,8 +186,13 @@ def generate_password(
     # Give the password one final shuffle for additional randomness
     generated_string_list = list(generated_string)
     secrets.SystemRandom().shuffle(generated_string_list)
-    
-    return ''.join(generated_string_list)
+
+    # Put the shuffled password back together
+    final_password = ''
+    for character in generated_string_list:
+        final_password = final_password + character
+
+    return final_password
 
 
 def main():
