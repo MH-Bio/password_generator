@@ -35,14 +35,6 @@ def secrets_char_generator(char_type, special_char_list):
 
     return rand_char
 
-
-def secrets_key(my_dict):
-    """
-    Returns a secrets key from a dictionary
-    """
-    return secrets.choice(list(my_dict))
-
-
 def generate_password(
     length = 12,
     no_uppercase = False,
