@@ -45,7 +45,7 @@ python secure_password_generator.py [OPTIONS]
 | `--no_uppercase`        | Exclude uppercase letters                                 |
 | `--no_lowercase`        | Exclude lowercase letters                                 |
 | `--no_common_special`   | Exclude common special characters (`!@#$%^&*()`)          |
-| `--no_uncommon_special` | Exclude uncommon special characters (`,.';:/<>[]{}\~&#124;\`)  |
+| `--no_uncommon_special` | Exclude uncommon special characters (`,.';:/<>[]{}\~|\`)  |
 | `--no_math_chars`       | Exclude math-related special characters (`=+-`)           |
 | `--no_numbers`          | Exclude digits                                            |
 | `--low_bucket_boundry`  | Weight (0–100) for letter generation (default: 45)        |
