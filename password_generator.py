@@ -173,16 +173,24 @@ def generate_password(
     # letters are lower case (except for the one required upper case letter), so if upper
     # case letters are allowed, you have a 50/50 chance of converting a character to be 
     # upper case.  If lowercase is not allowed, then just convert all letters to upper case
+    letter_counter = 0
+    for key in position_dict.keys():
+        if str(position_dict[key]).isalpha() == True:
+            letter_counter = letter_counter + 1
+    
     generated_string = '' 
     for i in range(0, length):
         if str(position_dict[i]) in alphabet:
             if no_lowercase == True:
                 position_dict[i] = position_dict[i].upper()
             if no_uppercase == False and no_lowercase == False:
-                if secrets.choice([0, 1]) == 1:
-                    position_dict[i] = position_dict[i].upper()
+                if letter_counter < 3:
+                    continue
+                else:
+                    if secrets.choice([0, 1]) == 1:
+                        position_dict[i] = position_dict[i].upper()
         generated_string = generated_string + str(position_dict[i])
-
+    
     # Give the password one final shuffle for additional randomness
     generated_string_list = list(generated_string)
     secrets.SystemRandom().shuffle(generated_string_list)
@@ -191,7 +199,7 @@ def generate_password(
     final_password = ''
     for character in generated_string_list:
         final_password = final_password + character
-
+    
     return final_password
 
 
