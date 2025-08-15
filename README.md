@@ -32,7 +32,7 @@ This work is licensed under the [Creative Commons Attribution 4.0 International 
 Run the script using Python 3:
 
 ```bash
-python secure_password_generator.py [OPTIONS]
+python password_generator.py [OPTIONS]
 ```
 
 ---
@@ -55,13 +55,13 @@ python secure_password_generator.py [OPTIONS]
 
 ## Example: Generate a 16-character password with no numbers
 
-python secure_password_generator.py -l 16 --no_numbers
+python password_generator.py -l 16 --no_numbers
 
 ---
 
 ## Example: Change probability weights
 
-python secure_password_generator.py --low_bucket_boundry 60 --mid_bucket_boundry 80
+python password_generator.py --low_bucket_boundry 60 --mid_bucket_boundry 80
 
 ---
 
